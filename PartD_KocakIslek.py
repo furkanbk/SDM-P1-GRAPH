@@ -76,7 +76,7 @@ if __name__ == "__main__":
 
     graph_algorithms = GraphAlgorithms(uri, user, password)
     graph_name = "MyAcademicGraph"  # Name your graph projection
-    graph_algorithms.drop_graph(graph_name)
+    #graph_algorithms.drop_graph(graph_name)
     graph_algorithms.project_graph(graph_name)
     graph_algorithms.run_pagerank(graph_name)  # Pass graph_name as argument
     graph_algorithms.run_louvain(graph_name)  # Pass graph_name as argument

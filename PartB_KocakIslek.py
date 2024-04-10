@@ -105,15 +105,14 @@ def run_query3(tx, year):
 
 def run_query4(tx):
     query4 = """
-   MATCH (a:Author)-[:WRITTEN_BY]-(p:Paper)-[:CITED_BY]-(c:Paper)
-WITH a, p, COUNT(c) AS citations
-ORDER BY citations DESC
-// RETURN a.name,p.title,citations
-WITH a, COLLECT(citations) AS citationList
-WITH a, [i IN RANGE(1, SIZE(citationList)) | REDUCE(s = 0, x IN citationList[..i] | s + x)] AS cumulativeCitations
-WITH a, [i IN RANGE(1, SIZE(cumulativeCitations)) | CASE WHEN cumulativeCitations[i - 1] >= i THEN i ELSE 0 END] AS hIndexes
-WITH a, MAX(hIndexes) AS hIndex
-RETURN a.name, hIndex
+    MATCH (a:Author)-[:WRITTEN_BY]-(p:Paper)-[:CITED_BY]-(c:Paper)
+    WITH a, p, COUNT(c) AS citations
+    ORDER BY citations DESC
+    WITH a, COLLECT(citations) AS citationList
+    WITH a, [i IN RANGE(1, SIZE(citationList)) | REDUCE(s = 0, x IN citationList[..i] | s + x)] AS cumulativeCitations
+    WITH a, [i IN RANGE(1, SIZE(cumulativeCitations)) | CASE WHEN cumulativeCitations[i - 1] >= i THEN i ELSE 0 END] AS hIndexes
+    WITH a, MAX(hIndexes) AS hIndex
+    RETURN a.name, hIndex
 
     """
 
